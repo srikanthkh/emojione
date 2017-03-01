@@ -1,5 +1,5 @@
-export const EmojiList = {
-  "people": {
+(function(ns){
+    ns.EmojiList = { "people": {
       "grinning": {
           "unicode": "1f600",
           "unicode_alternates": "",
@@ -17830,3 +17830,5 @@ export const EmojiList = {
       }
   }
 }
+}(this.emojis = this.emojis || {}));
+if(typeof module === "object") module.exports = this.emojis;
