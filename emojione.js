@@ -499,6 +499,26 @@
         return string.replace(/[-[\]{}()*+?.,;:&\\^$#\s]/g, "\\$&");
     };
 
+	ns.ImageToShortname = function(str) {
+        var finalString = str,
+        url,
+        urlRegex =  /<img.*?src="([^">]*\/([^">]*?))".*?>/g,
+        imgRegex = /<img.*?.*?>/;
+
+        while ( url = urlRegex.exec( str ) ) {
+            var urlString = url[1],
+            currentShortname = "";
+                urlString = urlString.substr(urlString.lastIndexOf('/') + 1).split('.')[0];
+                for (var shortname in ns.emojioneList) {
+                    if (ns.emojioneList[shortname].fname.indexOf(urlString.toLowerCase()) != -1) {
+                        currentShortname = shortname;
+                    }
+                }
+                finalString = finalString.replace(imgRegex, currentShortname);
+        }
+        return finalString;
+    }
+    
     ns.replaceAll = function(string, find, replacementList) {
         var escapedFind = ns.escapeRegExp(find);
         var search = new RegExp("<object[^>]*>.*?<\/object>|<span[^>]*>.*?<\/span>|<(?:object|embed|svg|img|div|span|p|a)[^>]*>|("+escapedFind+")", "gi");
